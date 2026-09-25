@@ -1,0 +1,8 @@
+.env
+flashlearn.db
+*.yml
+__pycache__
+.playwright-mcp
+demo_fastapi_gig
+gig-assets
+pip-output.txt
