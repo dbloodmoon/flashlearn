@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Flashlearn</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#view">Saltar al contenido</a>
+
+  <header class="topbar" id="topbar" hidden>
+    <div class="topbar-inner">
+      <a class="brand" href="#/dashboard" data-brand>
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-name">Flashlearn</span>
+      </a>
+      <div class="topbar-actions">
+        <span class="who" id="who" tabindex="-1"></span>
+        <button class="ghost" id="btn-logout" type="button">Cerrar sesión</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="view"></main>
+
+  <div class="modal-root" id="modal-root" hidden></div>
+  <div class="toast-root" id="toast-root" role="status" aria-live="polite"></div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

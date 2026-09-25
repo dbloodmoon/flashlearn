@@ -1,6 +1,8 @@
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime, timedelta
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from models import Usuario, Tarjeta, Mazo
@@ -33,7 +35,7 @@ def aplicar_sm2(tarjeta: Tarjeta, calificacion: int) -> Tarjeta:
 
 @app.get("/")
 def read_root():
-    return {"message": "Bienvenido a Flashlearn"}
+    return FileResponse("static/index.html")
 
 @app.post("/usuarios/registrar", response_model=UsuarioResponse)
 def registrar_usuario(usuario: UsuarioCreate, db: Session = Depends(get_db)):
@@ -223,5 +225,7 @@ def eliminar_usuario(db: Session = Depends(get_db), usuario_actual: Usuario = De
     db.delete(usuario_actual)
     db.commit()
     return {"detail": "Usuario eliminado"}    
+
+app.mount("/static", StaticFiles(directory="static"), name="static")    
     
     

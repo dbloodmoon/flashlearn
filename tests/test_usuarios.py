@@ -7,7 +7,8 @@ from auth import SECRET_KEY, ALGORITHM
 def test_root(client):
     r = client.get("/")
     assert r.status_code == 200
-    assert r.json() == {"message": "Bienvenido a Flashlearn"}
+    assert r.headers["content-type"].startswith("text/html")
+    assert "Flashlearn" in r.text
 
 
 def test_registrar_usuario(api):
