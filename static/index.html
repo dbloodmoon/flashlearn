@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="/static/styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#view">Saltar al contenido</a>
+  <a class="skip-link" id="skip-link" href="#view">Saltar al contenido</a>
 
   <header class="topbar" id="topbar" hidden>
     <div class="topbar-inner">
@@ -21,6 +21,7 @@
       </a>
       <div class="topbar-actions">
         <span class="who" id="who" tabindex="-1"></span>
+        <div class="lang-switch" id="lang-switch-top" role="group"></div>
         <button class="ghost" id="btn-logout" type="button">Cerrar sesión</button>
       </div>
     </div>
@@ -31,6 +32,7 @@
   <div class="modal-root" id="modal-root" hidden></div>
   <div class="toast-root" id="toast-root" role="status" aria-live="polite"></div>
 
+  <script src="/static/i18n.js"></script>
   <script src="/static/app.js"></script>
 </body>
 </html>
