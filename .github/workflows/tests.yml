@@ -18,3 +18,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           python -m pytest -sv
+        env:
+          SECRET_KEY: "super_secreto_de_prueba"
+          ALGORITHM: "HS256"
+          ACCESS_TOKEN_EXPIRE_MINUTES: "60"
+          DATABASE_URL: "sqlite:///./test.db"
