@@ -45,6 +45,23 @@ function wireLangSwitch(root) {
   });
 }
 
+function pintarThemeToggle(btn) {
+  const oscuro = getTheme() === "dark";
+  btn.textContent = oscuro ? "☀" : "☾";
+  btn.setAttribute("aria-pressed", String(oscuro));
+  btn.setAttribute("aria-label", oscuro ? t("theme.toLight") : t("theme.toDark"));
+  btn.title = oscuro ? t("theme.toLight") : t("theme.toDark");
+}
+
+function wireThemeToggle(btn) {
+  pintarThemeToggle(btn);
+  btn.addEventListener("click", () => setTheme(getTheme() === "dark" ? "light" : "dark"));
+}
+
+function pintarThemeToggles() {
+  document.querySelectorAll(".theme-toggle").forEach(pintarThemeToggle);
+}
+
 /* ============ Utilidades ============ */
 function escapeHtml(value) {
   return String(value)
@@ -187,11 +204,16 @@ document.addEventListener("langchange", () => {
   render();
 });
 
-/* Texto del HTML estático (skip link y botón de salida). */
+/* El tema solo cambia data-theme: el CSS se encarga del resto, asi que aqui
+   basta con repintar los toggles (glifo y etiqueta traducida). */
+document.addEventListener("themechange", pintarThemeToggles);
+
+/* Texto del HTML estático (skip link, botón de salida y toggles de tema). */
 function pintarChrome() {
   syncHtmlLang();
   $("#skip-link").textContent = t("a11y.skip");
   $("#btn-logout").textContent = t("tb.logout");
+  pintarThemeToggles();
 }
 
 /* ============ Vista: Auth ============ */
@@ -221,12 +243,14 @@ function renderAuth() {
           <button class="primary" id="submit-auth" type="submit" style="width:100%; justify-content:center;">${t("auth.login")}</button>
         </form>
         <div class="lang-switch auth-lang" id="lang-switch-auth" role="group"></div>
+        <button class="theme-toggle auth-theme" id="theme-toggle-auth" type="button"></button>
       </div>
     </div>`;
 
   const swAuth = $("#lang-switch-auth");
   swAuth.innerHTML = langSwitchHtml();
   wireLangSwitch(swAuth);
+  wireThemeToggle($("#theme-toggle-auth"));
 
   let modo = "login";
   const tabs = { login: $("#tab-login"), register: $("#tab-register") };
@@ -763,6 +787,7 @@ function modalTarjeta(props = {}) {
 }
 
 /* ============ Init ============ */
+wireThemeToggle($("#theme-toggle-top"));
 pintarChrome();
 $("#btn-logout").addEventListener("click", () => cerrarSesion());
 render();

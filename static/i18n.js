@@ -6,6 +6,9 @@ const I18N = {
 
     "lang.label": "Idioma",
 
+    "theme.toDark": "Cambiar a modo oscuro",
+    "theme.toLight": "Cambiar a modo claro",
+
     "auth.login": "Iniciar sesión",
     "auth.register": "Crear cuenta",
     "auth.user": "Usuario",
@@ -97,6 +100,9 @@ const I18N = {
     "a11y.skip": "Skip to content",
 
     "lang.label": "Language",
+
+    "theme.toDark": "Switch to dark mode",
+    "theme.toLight": "Switch to light mode",
 
     "auth.login": "Sign in",
     "auth.register": "Create account",
@@ -214,4 +220,15 @@ function t(key, params = {}) {
 
 function tp(oneKey, manyKey, n) {
   return t(n === 1 ? oneKey : manyKey, { n });
+}
+
+/* ============ Tema ============ */
+function getTheme() {
+  return localStorage.getItem("flashlearn_theme") === "light" ? "light" : "dark";
+}
+
+function setTheme(theme) {
+  localStorage.setItem("flashlearn_theme", theme === "light" ? "light" : "dark");
+  document.documentElement.dataset.theme = getTheme();
+  document.dispatchEvent(new CustomEvent("themechange"));
 }

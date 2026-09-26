@@ -1,5 +1,7 @@
 /* ============ Tokens ============ */
 :root {
+  color-scheme: light;
+
   --paper: #f5f6f8;
   --surface: #ffffff;
   --surface-2: #eef0f5;
@@ -8,20 +10,31 @@
 
   --ink: #1d2332;
   --ink-soft: #5a6274;
-  --ink-faint: #8a92a6;
+  /* Antes #8a92a6: fallaba AA (2.7-3.1:1) en .hint-flip, .muted y .face-lbl */
+  --ink-faint: #697184;
 
   --accent: #4f6bed;
   --accent-deep: #3a52c9;
+  --accent-hover: #3a52c9;
   --accent-soft: #e9edfe;
 
-  --good: #1f9d6b;
+  --good: #0f6b48;
   --good-soft: #e4f5ec;
-  --bad: #d4544c;
+  --bad: #a5352e;
   --bad-soft: #fbe9e7;
-  --warn: #b57b12;
+  --warn: #8a5c05;
   --warn-soft: #f8eedb;
 
   --focus: #2a3fbf;
+
+  /* Tinta sobre superficies con color: cambia con el tema para no perder contraste */
+  --on-accent: #ffffff;
+  --on-ink: #ffffff;
+  --on-ink-soft: #9aa3b8;
+
+  --topbar-bg: rgba(245, 246, 248, 0.86);
+  --scrim: rgba(20, 26, 45, 0.4);
+  --hairline: rgba(29, 35, 50, 0);
 
   --radius: 14px;
   --radius-sm: 9px;
@@ -34,6 +47,47 @@
   --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
 
   --page-w: 1040px;
+}
+
+/* ============ Tokens: tema oscuro (por defecto) ============ */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #0b0b0d;
+  --surface: #17171a;
+  --surface-2: #222227;
+  --line: #2a2a30;
+  --line-strong: #3b3b44;
+
+  --ink: #f2f2f5;
+  --ink-soft: #a9a9b4;
+  --ink-faint: #8f8f9c;
+
+  --accent: #6b7cff;
+  --accent-deep: #9aa8ff;
+  --accent-hover: #7e8dff;
+  --accent-soft: #1c2140;
+
+  --good: #3ddc84;
+  --good-soft: #10251a;
+  --bad: #ff6961;
+  --bad-soft: #2a1614;
+  --warn: #ffb340;
+  --warn-soft: #2a2110;
+
+  --focus: #9aa8ff;
+
+  --on-accent: #0b0b0d;
+  --on-ink: #0b0b0d;
+  --on-ink-soft: #5f5f6a;
+
+  --topbar-bg: rgba(11, 11, 13, 0.72);
+  --scrim: rgba(0, 0, 0, 0.62);
+  --hairline: rgba(255, 255, 255, 0.07);
+
+  --shadow-card: 0 14px 34px -22px rgba(0, 0, 0, 0.72), 0 1px 2px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 var(--hairline);
+  --shadow-pop: 0 24px 60px -28px rgba(0, 0, 0, 0.85), inset 0 1px 0 var(--hairline);
 }
 
 /* ============ Base ============ */
@@ -96,6 +150,17 @@ input:focus, textarea:focus {
 
 ::placeholder { color: var(--ink-faint); }
 
+::selection { background: var(--accent); color: var(--on-accent); }
+
+/* Chrome pinta el autofill con su propio fondo claro: se corrige con el tema */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--ink);
+  -webkit-box-shadow: 0 0 0 1000px var(--surface) inset;
+  caret-color: var(--ink);
+}
+
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
 
 .skip-link {
@@ -104,7 +169,7 @@ input:focus, textarea:focus {
   top: 8px;
   z-index: 90;
   background: var(--ink);
-  color: #fff;
+  color: var(--on-ink);
   padding: 8px 14px;
   border-radius: var(--radius-xs);
 }
@@ -115,8 +180,9 @@ input:focus, textarea:focus {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(245, 246, 248, 0.86);
-  backdrop-filter: blur(10px);
+  background: var(--topbar-bg);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
   border-bottom: 1px solid var(--line);
 }
 .topbar-inner {
@@ -170,13 +236,13 @@ input:focus, textarea:focus {
 /* ============ Botones ============ */
 .primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   padding: 10px 18px;
   display: inline-flex;
   align-items: center;
   gap: 8px;
 }
-.primary:hover { background: var(--accent-deep); }
+.primary:hover { background: var(--accent-hover); }
 .primary:disabled { opacity: 0.55; cursor: not-allowed; }
 
 .ghost {
@@ -206,6 +272,7 @@ input:focus, textarea:focus {
   padding: 24px;
 }
 .auth-card {
+  position: relative;
   width: 100%;
   max-width: 420px;
   background: var(--surface);
@@ -492,13 +559,15 @@ input:focus, textarea:focus {
   word-break: break-word;
   max-width: 90%;
 }
+/* La cara trasera se invierte en oscuro: sobre un fondo casi negro, una
+   tarjeta oscura perdería el giro. */
 .face.back {
   transform: rotateY(180deg);
   background: var(--ink);
-  color: #fff;
+  color: var(--on-ink);
   border-color: var(--ink);
 }
-.face.back .face-lbl { color: rgba(255, 255, 255, 0.55); }
+.face.back .face-lbl { color: var(--on-ink-soft); }
 
 .hint-flip {
   text-align: center;
@@ -565,7 +634,9 @@ input:focus, textarea:focus {
 .modal-scrim {
   position: absolute;
   inset: 0;
-  background: rgba(20, 26, 45, 0.4);
+  background: var(--scrim);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
   display: grid;
   place-items: center;
   padding: 20px;
@@ -598,8 +669,9 @@ input:focus, textarea:focus {
   max-width: 340px;
 }
 .toast {
-  background: var(--ink);
-  color: #fff;
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: 12px 16px;
   font-size: 14px;
@@ -607,8 +679,8 @@ input:focus, textarea:focus {
   box-shadow: var(--shadow-pop);
   animation: toast-in 0.25s ease;
 }
-.toast.error { background: var(--bad); }
-.toast.success { background: var(--good); }
+.toast.error { background: var(--bad-soft); color: var(--bad); border-color: transparent; }
+.toast.success { background: var(--good-soft); color: var(--good); border-color: transparent; }
 @keyframes toast-in {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
@@ -648,6 +720,28 @@ input:focus, textarea:focus {
   justify-content: center;
 }
 .auth-lang .lang-opt { padding: 6px 18px; min-width: 56px; }
+
+/* ============ Toggle de tema ============ */
+.theme-toggle {
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  font-size: 15px;
+  line-height: 1;
+}
+.theme-toggle:hover { color: var(--ink); border-color: var(--line-strong); }
+.theme-toggle:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.auth-theme {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
 
 /* ============ Utilidades ============ */
 .hidden { display: none !important; }

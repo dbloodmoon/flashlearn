@@ -1,10 +1,15 @@
 <!doctype html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light">
+  <meta name="color-scheme" content="dark light">
   <title>Flashlearn</title>
+  <script>
+    // Antes del primer pintado: si no, la pagina aparece blanca y luego salta a oscuro.
+    document.documentElement.dataset.theme =
+      localStorage.getItem("flashlearn_theme") === "light" ? "light" : "dark";
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,6 +27,7 @@
       <div class="topbar-actions">
         <span class="who" id="who" tabindex="-1"></span>
         <div class="lang-switch" id="lang-switch-top" role="group"></div>
+        <button class="theme-toggle" id="theme-toggle-top" type="button"></button>
         <button class="ghost" id="btn-logout" type="button">Cerrar sesión</button>
       </div>
     </div>
