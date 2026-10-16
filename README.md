@@ -319,38 +319,6 @@ transition and all animations.
 
 ---
 
-## Design decisions
-
-- **Scheduling lives on the server.** SM-2 runs in the API, not in the browser, so intervals cannot
-  be tampered with and the logic is covered by unit tests instead of manual QA.
-- **Stateless auth.** JWTs keep the API horizontally scalable and remove session storage, at the
-  cost of not being able to revoke a token before it expires.
-- **Ownership is enforced in the query, not after the fetch.** Every deck and card endpoint filters
-  by `usuario_id` inside the SQL query, which makes IDOR-style access impossible by construction and
-  keeps the check impossible to forget in a new endpoint.
-- **Text is normalized on write.** Deck names are capitalized and card text is lowercased before
-  being stored, so search and comparison stay predictable. This is a deliberate product decision
-  for a study app, and it means the API returns the normalized form.
-- **One process, one origin.** FastAPI serves the SPA as well as the API: no CORS, no second
-  deployment, and `pytest` can exercise the exact app object that runs in production.
-- **Spanish-first domain model.** Endpoint and column names are in Spanish (`mazos`, `tarjetas`,
-  `usuarios`) while the code, docs and UI are internationalized. It reflects the project's origin and
-  keeps the API consistent with its data model.
-
----
-
-## Roadmap
-
-- [ ] Alembic migrations (schema changes are currently `create_all`-only).
-- [ ] Refresh-token flow so sessions survive the access-token lifetime.
-- [ ] Rate limiting on the authentication endpoints.
-- [ ] Deck-level statistics (retention curve, reviews per day).
-- [ ] Import/export decks as JSON or CSV.
-- [ ] API pagination for large collections.
-- [ ] Public deployment so the live app is reachable from the README.
-
----
-
 ## Author
 
 **Daniel Molina Inojosa** — Backend developer in training, focused on Python and FastAPI.
