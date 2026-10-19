@@ -12,7 +12,7 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688?logo=fastapi&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-**Live demo:** [flashlearn-79ip.onrender.com](https://flashlearn-79ip.onrender.com) — hosted on Render's free tier, so the first request may take ~30 seconds to wake up.
+**Live demo:** [flashlearn-api-6ic9.onrender.com](https://flashlearn-api-6ic9.onrender.com) — hosted on Render's free tier, so the first request may take ~30 seconds to wake up.
 
 ---
 
