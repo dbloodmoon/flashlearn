@@ -43,7 +43,7 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
   bypassed by the client.
 - SQLAlchemy 2.x ORM that runs unchanged on SQLite (local/dev) and PostgreSQL (production).
 - Validation and serialization with Pydantic v2 schemas.
-- 51 pytest tests covering auth, decks, cards, and the scheduler, wired into GitHub Actions.
+- 55 pytest tests covering auth, decks, cards, and the scheduler, wired into GitHub Actions.
 
 **Frontend**
 
@@ -98,7 +98,7 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 │   ├── styles.css          # Design tokens, light & dark themes
 │   ├── app.js              # Router, views, API client
 │   └── i18n.js             # ES/EN dictionaries + theme storage helpers
-├── tests/                  # pytest suite (51 tests)
+├── tests/                  # pytest suite (55 tests)
 └── .github/workflows/      # CI: pytest on pushes and pull requests
 ```
 
@@ -297,7 +297,7 @@ The suite uses an **in-memory SQLite** database with a dependency override, so i
 configuration and never touches your development or production data.
 
 ```
-51 passed
+55 passed
 ```
 
 The same suite runs automatically on GitHub Actions for every push to `main`/`master`. The workflow
