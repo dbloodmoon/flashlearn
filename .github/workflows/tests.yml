@@ -1,23 +1,31 @@
-name: Tests de FlashLearn
+name: CI
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [master]
+  pull_request:
 
 jobs:
-  test:
+  tests:
+    name: Tests (Python 3.11)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
     steps:
-      - uses: actions/checkout@v4
-      - name: setup Python
-        uses: actions/setup-python@v3
+      - name: Checkout
+        uses: actions/checkout@v7
+      - name: Set up Python
+        uses: actions/setup-python@v7
         with:
           python-version: "3.11"
+          cache: pip
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          python -m pytest -sv
+      - name: Run tests
+        run: python -m pytest -v
         env:
           SECRET_KEY: "super_secreto_de_prueba"
           ALGORITHM: "HS256"
