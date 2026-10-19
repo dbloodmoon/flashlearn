@@ -1,6 +1,6 @@
 .env
 flashlearn.db
-*.yml
+gig-*.yml
 __pycache__
 .playwright-mcp
 demo_fastapi_gig
