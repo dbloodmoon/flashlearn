@@ -98,6 +98,13 @@ def test_repasar_tarjeta_inexistente(usuario):
     assert r.status_code == 404
 
 
+def test_tarjeta_nueva_queda_pendiente_para_hoy(usuario, mazo_creado):
+    creada = usuario.crear_tarjeta(mazo_creado["id"], pregunta="nueva").json()
+    r = usuario.tarjetas_repasar()
+    assert r.status_code == 200
+    assert [t["id"] for t in r.json()] == [creada["id"]]
+
+
 def test_tarjetas_para_repasar_solo_las_vencidas(usuario, mazo_creado, db_session):
     vencida = usuario.crear_tarjeta(mazo_creado["id"], pregunta="hola").json()
     futura = usuario.crear_tarjeta(mazo_creado["id"], pregunta="adios").json()

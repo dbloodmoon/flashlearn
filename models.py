@@ -1,7 +1,7 @@
 from sqlalchemy import UniqueConstraint
 from sqlalchemy import Column, String, Integer, Float, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
-from datetime import datetime, timedelta
+from datetime import datetime
 from database import Base
 
 class Usuario(Base):
@@ -36,7 +36,7 @@ class Tarjeta(Base):
     pregunta = Column(String(255), nullable=False)
     respuesta = Column(String(255), nullable=False)
     mazo_id = Column(Integer, ForeignKey("mazos.id"), nullable=False)
-    proxima_revision = Column(DateTime, default=lambda: datetime.now() + timedelta(days=1), nullable=False)
+    proxima_revision = Column(DateTime, default=datetime.now, nullable=False)
     intervalo_dias = Column(Integer, default=1, nullable=False)
     facilidad = Column(Float, default=2.5, nullable=False)
     veces_revisada = Column(Integer, default=0, nullable=False)

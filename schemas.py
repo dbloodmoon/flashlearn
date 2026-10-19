@@ -1,6 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, Field, ConfigDict
-from datetime import datetime, timedelta
+from datetime import datetime
 
 class MazoBase(BaseModel):
     nombre: str
@@ -33,7 +33,7 @@ class TarjetaBase(BaseModel):
     pregunta: str = Field(..., min_length=1, max_length=255)
     respuesta: str = Field(..., min_length=1, max_length=255)
     mazo_id: int
-    proxima_revision: datetime = Field(default_factory=lambda: datetime.now() + timedelta(days=1))
+    proxima_revision: datetime = Field(default_factory=datetime.now)
     intervalo_dias: int = Field(default=1)
     facilidad: float = Field(default=2.5)
     veces_revisada: int = Field(default=0)

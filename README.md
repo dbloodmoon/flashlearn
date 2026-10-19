@@ -99,7 +99,7 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 │   ├── app.js              # Router, views, API client
 │   └── i18n.js             # ES/EN dictionaries + theme storage helpers
 ├── tests/                  # pytest suite (51 tests)
-└── .github/workflows/      # CI: pytest on every push
+└── .github/workflows/      # CI: pytest on pushes and pull requests
 ```
 
 The backend serves the frontend from the same origin: `GET /` returns `index.html` and `/static` is
@@ -121,7 +121,7 @@ Usuario 1 ──── * Mazo 1 ──── * Tarjeta
 - `UNIQUE (nombre, usuario_id)` — deck names are unique per user, not globally.
 - Cascading deletes are handled by the ORM (`cascade="all, delete-orphan"`): removing a deck also
   removes its cards, and removing a user removes their decks.
-- New cards default to `proxima_revision = now() + 1 day`, `intervalo_dias = 1`,
+- New cards start due immediately (`proxima_revision = now()`), `intervalo_dias = 1`,
   `facilidad = 2.5`, `veces_revisada = 0`.
 
 ---
