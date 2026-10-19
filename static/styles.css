@@ -525,11 +525,13 @@ input:-webkit-autofill:focus {
 .flip-wrap { perspective: 1200px; }
 .flip-card {
   position: relative;
+  display: grid;
   transform-style: preserve-3d;
   transition: transform 0.5s ease;
 }
 .flip-card.is-flipped { transform: rotateY(180deg); }
 .face {
+  grid-area: 1 / 1;
   backface-visibility: hidden;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -752,6 +754,8 @@ input:-webkit-autofill:focus {
   * { animation: none !important; transition: none !important; }
   .flip-card, .flip-card.is-flipped { transform: none; }
   .face { min-height: auto; }
+  .flip-card.is-flipped .face.front { display: none; }
+  .flip-card.is-flipped .face.back { transform: none; }
 }
 
 @media (max-width: 560px) {

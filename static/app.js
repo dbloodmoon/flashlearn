@@ -588,7 +588,7 @@ async function renderReview() {
           </div>
         </div>
       </div>
-      <p class="hint-flip">${t("rev.hint")}</p>
+      <p class="hint-flip" id="flip-hint">${t("rev.hint")}</p>
 
       <div class="grade-pad" id="grade-pad"></div>
       <div id="rev-result"></div>
@@ -598,8 +598,9 @@ async function renderReview() {
   const card = $("#flip-card");
 
   card.addEventListener("click", () => {
-    card.classList.toggle("is-flipped");
-    card.setAttribute("aria-label", card.classList.contains("is-flipped") ? t("rev.showQuestion") : t("rev.showAnswer"));
+    const flipped = card.classList.toggle("is-flipped");
+    card.setAttribute("aria-label", flipped ? t("rev.showQuestion") : t("rev.showAnswer"));
+    $("#flip-hint").textContent = flipped ? t("rev.hintFlipped") : t("rev.hint");
   });
 
   function pintarResultado() {
@@ -621,6 +622,7 @@ async function renderReview() {
     $("#rev-mazo").textContent = tarjeta.mazo?.nombre || "—";
     card.classList.remove("is-flipped");
     card.setAttribute("aria-label", t("rev.showAnswer"));
+    $("#flip-hint").textContent = t("rev.hint");
 
     $("#rev-result").innerHTML = "";
     if (review.result) {
