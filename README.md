@@ -79,6 +79,7 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 | Frontend | Vanilla HTML/CSS/JS | Zero dependencies, instant load, easy to audit |
 | Tests | pytest + FastAPI `TestClient` | In-memory SQLite with dependency overrides |
 | CI | GitHub Actions | Tests on every push to `master` and on pull requests |
+| Containers | Docker Compose | Reproducible local stack: app + PostgreSQL 17 |
 
 ---
 
@@ -93,6 +94,8 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 ├── database.py             # Engine, session factory, DeclarativeBase
 ├── config.py               # Settings loaded from environment / .env
 ├── requirements.txt
+├── Dockerfile              # Image: python:3.14-slim, non-root user
+├── docker-compose.yml      # Local stack: app + PostgreSQL 17
 ├── static/                 # Frontend SPA, served by the same process
 │   ├── index.html          # App shell + pre-paint theme script
 │   ├── styles.css          # Design tokens, light & dark themes
@@ -284,6 +287,20 @@ curl -X POST http://127.0.0.1:8000/mazos \
 
 > **Note:** `POST /usuarios/login` expects an **OAuth2 password form** (`application/x-www-form-urlencoded`),
 > not a JSON body. The Swagger UI has an **Authorize** button that handles this for you.
+
+### Docker (alternative to steps 1–3)
+
+```bash
+docker compose up --build
+```
+
+The stack serves the app at <http://127.0.0.1:8000> backed by a local **PostgreSQL 17** container,
+so development never touches the production database. Data persists in the `pgdata` volume.
+
+```bash
+docker compose down      # stop the stack
+docker compose down -v   # stop and delete the local database
+```
 
 ---
 

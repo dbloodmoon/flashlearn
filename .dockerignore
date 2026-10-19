@@ -1,0 +1,16 @@
+.git
+.github
+.gitignore
+.gitattributes
+.env
+*.db
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+.playwright-mcp/
+tests/
+screenshots/
+README.md
+LICENSE
