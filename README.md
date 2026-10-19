@@ -12,11 +12,14 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.141-009688?logo=fastapi&logoColor=white)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
+**Live demo:** [flashlearn-79ip.onrender.com](https://flashlearn-79ip.onrender.com) — hosted on Render's free tier, so the first request may take ~30 seconds to wake up.
+
 ---
 
 ## Table of contents
 
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Tech stack](#tech-stack)
 - [Architecture](#architecture)
 - [The SM-2 scheduler](#the-sm-2-scheduler)
@@ -24,8 +27,6 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 - [Getting started](#getting-started)
 - [Running the tests](#running-the-tests)
 - [Frontend notes](#frontend-notes)
-- [Design decisions](#design-decisions)
-- [Roadmap](#roadmap)
 - [Author](#author)
 
 ---
@@ -52,7 +53,16 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
   no flash of the wrong theme).
 - Full ES/EN interface (83 translation keys per language) with a segmented language switch.
 - WCAG 2.1 AA contrast verified in both themes, keyboard focus styles, `aria-pressed` /
-  `aria-label` on the theme toggle, and a `prefers-reduced-motion` fallback that disables animation.
+  `aria-label` on the theme toggle, and a `prefers-reduced-motion` fallback that swaps the card
+  without animation.
+
+---
+
+## Screenshots
+
+| Dashboard | Review session |
+| --- | --- |
+| <img src="screenshots/dashboard.png" alt="Deck dashboard" width="420"/> | <img src="screenshots/review.png" alt="Flip-card review session" width="420"/> |
 
 ---
 
@@ -68,7 +78,7 @@ backend, a dependency-free JavaScript SPA on the front, JWT authentication, and 
 | Server | Uvicorn | ASGI server used by FastAPI |
 | Frontend | Vanilla HTML/CSS/JS | Zero dependencies, instant load, easy to audit |
 | Tests | pytest + FastAPI `TestClient` | In-memory SQLite with dependency overrides |
-| CI | GitHub Actions | Test suite on every push to `main`/`master` |
+| CI | GitHub Actions | Tests on every push to `master` and on pull requests |
 
 ---
 
@@ -315,7 +325,7 @@ event that re-renders the view and every static string, including the theme togg
 **Accessibility.** Contrast was audited in both themes (all text ≥ 4.5:1, the primary button is the
 tightest at 4.51:1 in light mode), the review card is operable by keyboard, the theme toggle exposes
 `aria-pressed` and a translated `aria-label`, and `prefers-reduced-motion: reduce` disables the flip
-transition and all animations.
+transition and all animations, swapping the card faces directly instead.
 
 ---
 
